@@ -20,3 +20,8 @@ data "azuredevops_project" "tfazlab" {
 output "project_id" {
   value = data.azuredevops_project.tfazlab.project_id
 }
+
+data "azuredevops_git_repository" "tfazrepo" {
+  project_id = data.azuredevops_project.tfazlab.project_id
+  name       = "tfazlabro"
+}

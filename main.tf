@@ -97,21 +97,17 @@ resource "azuredevops_build_definition" "DeployPipeline" {
   name            = "tfaz_pipe"
   project_id      = data.azuredevops_project.tfazlab.id
   agent_pool_name = "Hosted Ubuntu 1604"
-  depends_on      = [data.azuredevops_project.tfazlab]
+  depends_on      = [data.azuredevops_project.tfazlab, data.azuredevops_git_repository.tfazrepo]
 
   ci_trigger {
     use_yaml = true
   }
 
-  variable_groups = [
-
-    azuredevops_variable_group.hawaVB.id
-
-  ]
+  variable_groups = [azuredevops_variable_group.hawaVB.id]
 
   repository {
     repo_type   = "TfsGit"
-    repo_id     = "https://dev.azure.com/tfaz/tfazlab"
+    repo_id     = data.azuredevops_git_repository.tfazrepo.id
     branch_name = "main"
     yml_path    = "./BuildDefinitions/Example.yml"
   }

@@ -3,6 +3,9 @@ trigger:
     include:
       - main
 
+paths: 
+
+
 jobs:
 - job: TerraformJob
   displayName: 'Terraform Deployment'
@@ -11,6 +14,9 @@ jobs:
 
   variables:
     - group: hawaVB
+
+  steps:
+    - checkout: self
 
   steps:
     - task: PowerShell@2

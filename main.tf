@@ -93,13 +93,13 @@ resource "azurerm_role_assignment" "main" {
 
 ############ Azure DevOps Pipeline ############
 
-resource "azuredevops_build_definition" "DeployPipeline" {
+resource "azuredevops_pipeline" "DeployPipeline" {
   name            = "tfaz_pipe"
   project_id      = data.azuredevops_project.tfazlab.id
   agent_pool_name = "Hosted Ubuntu 1604"
   depends_on      = [data.azuredevops_project.tfazlab, data.azuredevops_git_repository.tfazrepo]
 
-  ci_trigger {
+  trigger {
     use_yaml = true
   }
 

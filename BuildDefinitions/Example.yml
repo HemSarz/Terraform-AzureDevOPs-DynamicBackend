@@ -13,7 +13,7 @@ jobs:
     - group: hawaVB
   
   steps:
-    - checkout: sel
+    - checkout: self
     - task: PowerShell@2
       displayName: 'Set Azure Service Principal Credentials'
       inputs:

@@ -93,7 +93,7 @@ resource "azurerm_role_assignment" "main" {
 
 ############ Azure DevOps Pipeline ############
 
-resource "azuredevops_pipeline" "DeployPipeline" {
+resource "azuredevops_build_definitions" "DeployPipeline" {
   name            = "tfaz_pipe"
   project_id      = data.azuredevops_project.tfazlab.id
   agent_pool_name = "Hosted Ubuntu 1604"

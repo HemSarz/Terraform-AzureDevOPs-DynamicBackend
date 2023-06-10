@@ -16,6 +16,7 @@ jobs:
     - checkout: self
 
   steps:
+    - checkout: sel
     - task: PowerShell@2
       displayName: 'Set Azure Service Principal Credentials'
       inputs:

@@ -11,7 +11,7 @@ jobs:
 
 paths:
     include:
-      - /tfazlabbro/variables.tf
+      - /tfazlabsro/variables.tf
       - /tfazlabro/main.tf
 
   variables:

@@ -93,13 +93,13 @@ resource "azurerm_role_assignment" "main" {
 
 ############ Azure DevOps Pipeline ############
 
-resource "azuredevops_build_definitions" "DeployPipeline" {
+resource "azuredevops_build_definition" "DeployPipeline" {
   name            = "tfaz_pipe"
   project_id      = data.azuredevops_project.tfazlab.id
   agent_pool_name = "Hosted Ubuntu 1604"
   depends_on      = [data.azuredevops_project.tfazlab, data.azuredevops_git_repository.tfazrepo]
 
-  trigger {
+  ci_trigger {
     use_yaml = true
   }
 
@@ -109,6 +109,6 @@ resource "azuredevops_build_definitions" "DeployPipeline" {
     repo_type   = "TfsGit"
     repo_id     = data.azuredevops_git_repository.tfazrepo.id
     branch_name = "main"
-    yml_path    = "./BuildDefinitions/Example.yml"
+    yml_path    = "./BuildDefinitions/tfazbuild.yml"
   }
 }

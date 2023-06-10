@@ -11,10 +11,7 @@ jobs:
 
   variables:
     - group: hawaVB
-
-  steps:
-    - checkout: self
-
+  
   steps:
     - checkout: sel
     - task: PowerShell@2

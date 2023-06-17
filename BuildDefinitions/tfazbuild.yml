@@ -27,7 +27,8 @@ jobs:
           $env:ARM_CLIENT_SECRET = "$(SASPass)"
           $env:ARM_TENANT_ID = "$(tenant_id)"
           $env:ARM_SUBSCRIPTION_ID = "$(subscription_id)"
-
+          Write-Host "ARM_TENANT_ID: $env:ARM_TENANT_ID"
+          
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '3.x'

@@ -16,7 +16,7 @@ variable "tenant_id" {
   description = "description"
 }
 
-variable "sub_id" {
+variable "subscription_id" {
   type        = string
   default     = "60b8226d-3048-4a92-b759-c99f388752a1"
   description = "description"

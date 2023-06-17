@@ -2,7 +2,7 @@ trigger:
   branches:
     include:
       - main
-      
+
 jobs:
 - job: TerraformJob
   displayName: 'Terraform Deployment'
@@ -14,13 +14,6 @@ jobs:
   
   steps:
     - checkout: self
-      displayName: "Checkout source code"
-      clean: true
-      paths:
-        include:
-          - '/tfazlabro/variables.tf'
-          - '/tfazlabro/main.tf'
-
     - task: PowerShell@2
       displayName: 'Set Azure Service Principal Credentials'
       inputs:
@@ -67,3 +60,8 @@ jobs:
           -out="out.plan"
         terraform apply "out.plan"
       displayName: 'Terraform Init, Plan, and Apply'
+      
+paths:
+  include:
+    - '/tfazlabro/variables.tf'
+    - '/tfazlabro/main.tf'

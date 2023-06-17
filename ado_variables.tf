@@ -10,15 +10,24 @@ resource "azuredevops_variable_group" "hawaVB" {
   }
 
   variable {
+    name  = "tfazAppID"
+    value = azuread_application.tfazsp.application_id
+  }
+
+  variable {
     name  = "SASPass"
-    value = azurerm_storage_account.stg.primary_access_key
+    value = data.azurerm_storage_account.stg.primary_access_key
   }
 
   variable {
     name  = "tenant_id"
-    value = var.tenant_id
+    value = data.azuread_client_config.current.tenant_id
   }
 
+  variable {
+    name  = "subscription_id"
+    value = var.subscription_id
+  }
   variable {
     name  = "VMAdminPass"
     value = var.VMAdminPass

@@ -18,25 +18,36 @@ jobs:
   
   steps:
     - checkout: self
-    
-    - bash: |
-        echo "ARM_CLIENT_ID=$(SPNPass)" >> $GITHUB_ENV
-        echo "ARM_CLIENT_SECRET=$(SASPass)" >> $GITHUB_ENV
-        echo "ARM_TENANT_ID=$(tenant_id)" >> $GITHUB_ENV
-        echo "ARM_SUBSCRIPTION_ID=$(subscription_id)" >> $GITHUB_ENV
+    - task: PowerShell@2
       displayName: 'Set Azure Service Principal Credentials'
-    
-    - script: |
-        sudo apt-get update
-        sudo apt-get install -y jq
+      inputs:
+        targetType: 'inline'
+        script: |
+          $env:ARM_CLIENT_ID = "$(tfazAppID)"
+          $env:ARM_CLIENT_SECRET = "$(SPNPass)"
+          $env:ARM_TENANT_ID = "$(tenant_id)"
+          $env:ARM_SUBSCRIPTION_ID = "$(subscription_id)"
+          $env:ARM_STORAGE_ACCOUNT = "$(SASPass)"
+          
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.x'
+        addToPath: true
 
+    - script: python -m pip install --upgrade pip
+      displayName: 'Upgrade pip'
+
+    - script: pip install azure-cli
+      displayName: 'Install Azure CLI'
+
+    - script: |
         echo "##vso[task.setvariable variable=storage_account_SASPass;isOutput=true]$(terraform output -raw outputvar)"
         echo "##vso[task.setvariable variable=pass_tfazsp;isOutput=true]$(terraform output -raw outputvar)"
         echo "##vso[task.setvariable variable=appid_tfazsp;isOutput=true]$(terraform output -raw outputvar)"
       displayName: 'Get Terraform Outputs'
 
     - script: |
-        az login --service-principal -u $SPNPass -p $SASPass --tenant $tenant_id
+        az login --service-principal -u $(tfazAppID) -p $(SASPass) --tenant $(tenant_id)
       displayName: 'Log Into Azure'
 
     - script: |
@@ -46,7 +57,7 @@ jobs:
           -backend-config="container_name=$(cont_name)" \
           -backend-config="access_key=$(storage_account_SASPass)" \
           -backend-config="key=$(state_file)"
-        terraform plan -var="appid_tfazsp=$(SPNPass)" \
+        terraform plan -var="appid_tfazsp=$(tfazAppID)" \
           -var="pass_tfazsp=$(SASPass)" \
           -var="tenant_id=$(tenant_id)" \
           -var="subscription_id=$(subscription_id)" \

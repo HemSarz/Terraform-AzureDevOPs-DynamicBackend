@@ -1,10 +1,14 @@
+variable "AZDO_ORG_SERVICE_URL" {
+  type        = string
+  default     = "https://dev.azure.com/tfaz"
+  description = "description"
+}
 
-#variable "Client_Secret" {
-#  type        = string
-#name        = SPNPass
-##value       = azuread_service_principal_password.tfazsp.value
-#description = "description"
-#s}
+variable "AZDO_PERSONAL_ACCESS_TOKEN" {
+  type        = string
+  default     = "d55bqk5kqlcru2sc47o4dbppxl2nwnl4xcoj3xi5ugscunlwodhq"
+  description = "description"
+}
 
 variable "tenant_id" {
   type        = string
@@ -12,7 +16,7 @@ variable "tenant_id" {
   description = "description"
 }
 
-variable "subscription_id" {
+variable "sub_id" {
   type        = string
   default     = "60b8226d-3048-4a92-b759-c99f388752a1"
   description = "description"

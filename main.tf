@@ -61,7 +61,7 @@ resource "azuredevops_serviceendpoint_azurerm" "AzServEndPoint" {
   service_endpoint_name     = "AZ Server Conn"
   azurerm_spn_tenantid      = data.azurerm_client_config.current.tenant_id
   azurerm_subscription_id   = data.azurerm_client_config.current.subscription_id
-  azurerm_subscription_name = var.sub_name
+  azurerm_subscription_name = var.sub_id
 
   credentials {
     serviceprincipalid  = azuread_service_principal.tfazsp.application_id

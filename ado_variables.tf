@@ -11,7 +11,7 @@ resource "azuredevops_variable_group" "hawaVB" {
 
   variable {
     name  = "tfazAppID"
-    value = azuread_application.tfazsp.application_id
+    value = data.azuread_application.tfazsp.application_id
   }
 
   variable {

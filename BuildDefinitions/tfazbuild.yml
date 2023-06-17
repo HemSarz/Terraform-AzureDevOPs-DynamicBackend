@@ -19,8 +19,8 @@ jobs:
       inputs:
         targetType: 'inline'
         script: |
-          $env:ARM_CLIENT_ID = "$(appid_tfazsp)"
-          $env:ARM_CLIENT_SECRET = "$(pass_tfazsp)"
+          $env:ARM_CLIENT_ID = "$(SPNPass)"
+          $env:ARM_CLIENT_SECRET = "$(SASPass)"
           $env:ARM_TENANT_ID = "$(tenant_id)"
           $env:ARM_SUBSCRIPTION_ID = "$(subscription_id)"
 
@@ -42,7 +42,7 @@ jobs:
       displayName: 'Get Terraform Outputs'
 
     - script: |
-        az login --service-principal -u $(appid_tfazsp) -p $(pass_tfazsp) --tenant $(tenant_id)
+        az login --service-principal -u $(SPNPass) -p $(SASPass) --tenant $(tenant_id)
       displayName: 'Log Into Azure'
 
     - script: |
@@ -52,8 +52,8 @@ jobs:
           -backend-config="container_name=$(cont_name)" \
           -backend-config="access_key=$(storage_account_SASPass)" \
           -backend-config="key=$(state_file)"
-        terraform plan -var="appid_tfazsp=$(appid_tfazsp)" \
-          -var="pass_tfazsp=$(pass_tfazsp)" \
+        terraform plan -var="appid_tfazsp=$(SPNPass)" \
+          -var="pass_tfazsp=$(SASPass)" \
           -var="tenant_id=$(tenant_id)" \
           -var="subscription_id=$(subscription_id)" \
           -var="VMAdminPass=$(VMAdminPass)" \

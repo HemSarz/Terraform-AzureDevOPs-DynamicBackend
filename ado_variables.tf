@@ -5,7 +5,7 @@ resource "azuredevops_variable_group" "hawaVB" {
   allow_access = true
 
   variable {
-    name  = "SPNPass"
+    name  = "appid_tfazsp"
     value = azuread_application_password.tfazsp.value
   }
 

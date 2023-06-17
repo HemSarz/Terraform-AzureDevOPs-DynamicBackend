@@ -60,8 +60,3 @@ jobs:
           -out="out.plan"
         terraform apply "out.plan"
       displayName: 'Terraform Init, Plan, and Apply'
-      
-paths:
-  include:
-    - '/tfazlabro/variables.tf'
-    - '/tfazlabro/main.tf'

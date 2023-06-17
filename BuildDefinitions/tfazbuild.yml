@@ -4,12 +4,9 @@ trigger:
       - main
   paths:
     include:
-      - /tfazlabro/main.tf
-      - /tfazlabro/variables.tf
-      paths:
-    include:
       - /tfazlabro/variables.tf
       - /tfazlabro/main.tf
+
 jobs:
 - job: TerraformJob
   displayName: 'Terraform Deployment'

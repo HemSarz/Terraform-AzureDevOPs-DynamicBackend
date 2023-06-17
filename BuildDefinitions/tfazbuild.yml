@@ -10,7 +10,7 @@ trigger:
 jobs:
 - job: TerraformJob
   displayName: 'Terraform Deployment'
-  pool:
+  pool: 
     vmImage: 'ubuntu-latest'
 
   variables:
@@ -25,10 +25,9 @@ jobs:
         echo "##vso[task.setvariable variable=tfazAppID;isOutput=true]$env:tfazAppID"
         echo "##vso[task.setvariable variable=SASPass;isOutput=true]$env:SASPass"
         echo "##vso[task.setvariable variable=tenant_id;isOutput=true]$env:tenant_id"
-        az login --service-principal -u $env:tfazAppID -p $env:SASPass --tenant $env:tenant_id
 
   - script: |
-      az login --service-principal -u $(tfazAppID) -p $(SASPass) --tenant $(tenant_id)
+      az login --service-principal -u $env:tfazAppID -p $env:SASPass --tenant $env:tenant_id
     displayName: 'Log Into Azure'
 
   - script: |

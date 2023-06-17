@@ -14,6 +14,8 @@ jobs:
   
   steps:
     - checkout: self
+      displayName: "Checkout source code"
+      clean: true
       paths:
         include:
           - '/tfazlabro/variables.tf'

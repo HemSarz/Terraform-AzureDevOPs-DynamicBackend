@@ -16,6 +16,7 @@ jobs:
   variables:
     - group: hawaVB
   
+  steps:
     - script: |
         az login --service-principal -u $(tfazAppID) -p $(SASPass) --tenant $(tenant_id)
       displayName: 'Log Into Azure'

@@ -17,26 +17,32 @@ jobs:
     - group: hawaVB
   
   steps:
-    - script: |
-        echo "##vso[task.setvariable variable=tfazAppID;isOutput=true]$tfazAppID"
-        echo "##vso[task.setvariable variable=SASPass;isOutput=true]$SASPass"
-        echo "##vso[task.setvariable variable=tenant_id;isOutput=true]$tenant_id"
-        
-        az login --service-principal -u $(tfazAppID) -p $(SPNPass) --tenant $(tenant_id)
-      displayName: 'Log Into Azure'
+  - task: PowerShell@2
+    displayName: 'Set Azure Service Principal Credentials'
+    inputs:
+      targetType: 'inline'
+      script: |
+        echo "##vso[task.setvariable variable=tfazAppID;isOutput=true]$env:tfazAppID"
+        echo "##vso[task.setvariable variable=SASPass;isOutput=true]$env:SASPass"
+        echo "##vso[task.setvariable variable=tenant_id;isOutput=true]$env:tenant_id"
+        az login --service-principal -u $env:tfazAppID -p $env:SASPass --tenant $env:tenant_id
 
-    - script: |
-        cd $(System.DefaultWorkingDirectory)/TFAZLABRO
-        terraform init -backend-config=resource_group_name=$(rg_name) \
-          -backend-config="storage_account_name=$(storageAccount_name)" \
-          -backend-config="container_name=$(cont_name)" \
-          -backend-config="access_key=$(SASPass)" \
-          -backend-config="key=$(state_file)"
-        terraform plan -var="appid_tfazsp=$(tfazAppID)" \
-          -var="pass_tfazsp=$(SASPass)" \
-          -var="tenant_id=$(tenant_id)" \
-          -var="subscription_id=$(subscription_id)" \
-          -var="VMAdminPass=$(VMAdminPass)" \
-          -out="out.plan"
-        terraform apply "out.plan"
-      displayName: 'Terraform Init, Plan, and Apply'
+  - script: |
+      az login --service-principal -u $(tfazAppID) -p $(SASPass) --tenant $(tenant_id)
+    displayName: 'Log Into Azure'
+
+  - script: |
+      cd $(System.DefaultWorkingDirectory)/TFAZLABRO
+      terraform init -backend-config=resource_group_name=$(rg_name) \
+        -backend-config="storage_account_name=$(storageAccount_name)" \
+        -backend-config="container_name=$(cont_name)" \
+        -backend-config="access_key=$(SASPass)" \
+        -backend-config="key=$(state_file)"
+      terraform plan -var="appid_tfazsp=$(tfazAppID)" \
+        -var="pass_tfazsp=$(SASPass)" \
+        -var="tenant_id=$(tenant_id)" \
+        -var="subscription_id=$(subscription_id)" \
+        -var="VMAdminPass=$(VMAdminPass)" \
+        -out="out.plan"
+      terraform apply "out.plan"
+    displayName: 'Terraform Init, Plan, and Apply'

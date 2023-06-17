@@ -84,45 +84,22 @@ variable "keyvault_name" {
   description = "description"
 }
 
-variable "AZDO_PERSONAL_ACCESS_TOKEN" {
-  type        = string
-  default     = "jnsawmdtg6qmzyugpl7rsmbnkoneqiacumhz5bhue2njl3x276lq"
-  description = "description"
-}
-
-variable "AZDO_ORG_SERVICE_URL" {
-  type        = string
-  default     = "https://dev.azure.com/tfaz"
-  description = "description"
-}
-
-variable "AZDO_GITHUB_SERVICE_CONNECTION_PAT" {
-  type        = string
-  default     = "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"
-  description = "description"
-}
-
 variable "AzureAD_ApplicationName" {
   type        = string
   default     = "tfazSPN"
   description = "description"
 }
 
-variable "AzureAD_SPN_Password_Expiry" {
-  type        = string
-  default     = "2028-01-01T01:02:03Z"
-  description = "The End Date which the Password is valid until, formatted as a RFC3339 date string (e.g. 2018-01-01T01:02:03Z)."
-}
 
-variable "sub_name" {
+variable "sub-id" {
   type        = string
   default     = "payg"
   description = "description"
 }
 
-variable "AdoProName" {
+variable "tfaz-proj" {
   type        = string
-  default     = "HawaS"
+  default     = "tfaz-proj-infra"
   description = "description"
 }
 
@@ -133,10 +110,7 @@ variable "virtual_network" {
 variable "internal_subnet" {
   default = "10.0.2.0/24"
 }
-variable "office-WAN" {
-  description = "The WAN IP of the office so I can RDP into my test enviornment"
-  default     = "181.171.126.253"
-}
+
 variable "vm_name" {
   description = "The name given to the vm"
   default     = "vm-srv01"

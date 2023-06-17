@@ -18,36 +18,25 @@ jobs:
   
   steps:
     - checkout: self
-    - task: PowerShell@2
+    
+    - bash: |
+        echo "ARM_CLIENT_ID=$(SPNPass)" >> $GITHUB_ENV
+        echo "ARM_CLIENT_SECRET=$(SASPass)" >> $GITHUB_ENV
+        echo "ARM_TENANT_ID=$(tenant_id)" >> $GITHUB_ENV
+        echo "ARM_SUBSCRIPTION_ID=$(subscription_id)" >> $GITHUB_ENV
       displayName: 'Set Azure Service Principal Credentials'
-      inputs:
-        targetType: 'inline'
-        script: |
-          $env:ARM_CLIENT_ID = "$(SPNPass)"
-          $env:ARM_CLIENT_SECRET = "$(SASPass)"
-          $env:ARM_TENANT_ID = "$(tenant_id)"
-          $env:ARM_SUBSCRIPTION_ID = "$(subscription_id)"
-          Write-Host "ARM_TENANT_ID: $env:ARM_TENANT_ID"
-          
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '3.x'
-        addToPath: true
-
-    - script: python -m pip install --upgrade pip
-      displayName: 'Upgrade pip'
-
-    - script: pip install azure-cli
-      displayName: 'Install Azure CLI'
-
+    
     - script: |
+        sudo apt-get update
+        sudo apt-get install -y jq
+
         echo "##vso[task.setvariable variable=storage_account_SASPass;isOutput=true]$(terraform output -raw outputvar)"
         echo "##vso[task.setvariable variable=pass_tfazsp;isOutput=true]$(terraform output -raw outputvar)"
         echo "##vso[task.setvariable variable=appid_tfazsp;isOutput=true]$(terraform output -raw outputvar)"
       displayName: 'Get Terraform Outputs'
 
     - script: |
-        az login --service-principal -u $(SPNPass) -p $(SASPass) --tenant $(tenant_id)
+        az login --service-principal -u $SPNPass -p $SASPass --tenant $tenant_id
       displayName: 'Log Into Azure'
 
     - script: |

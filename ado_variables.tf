@@ -14,9 +14,10 @@ resource "azuredevops_variable_group" "hawaVB" {
     value = azurerm_storage_account.stg.primary_access_key
   }
 
-variable {
-  value = var.tenant_id
-}
+  variable {
+    name  = "tenant_id"
+    value = var.tenant_id
+  }
 
   variable {
     name  = "VMAdminPass"

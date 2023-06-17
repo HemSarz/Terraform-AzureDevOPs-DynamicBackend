@@ -3,16 +3,16 @@ trigger:
     include:
       - main
 paths:
-    include:
-      - /tfazlabro/variables.tf
-      - /tfazlabro/main.tf
+  include:
+    - /tfazlabro/variables.tf
+    - /tfazlabro/main.tf
 
 jobs:
 - job: TerraformJob
   displayName: 'Terraform Deployment'
   pool:
     vmImage: 'ubuntu-latest'
-    
+
   variables:
     - group: hawaVB
   

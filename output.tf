@@ -8,7 +8,7 @@ output "SPNPass" {
   sensitive = true
 }
 
-output "SASPass" {
+output "STGPass" {
   value     = data.azurerm_storage_account.stg.primary_access_key
   sensitive = true
 }

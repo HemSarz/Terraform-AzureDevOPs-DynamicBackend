@@ -16,7 +16,7 @@ variables:
 steps:
   - checkout: self
 
-- task: PowerShell@2
+  - task: PowerShell@2
     displayName: 'Set Azure Service Principal Credentials'
     inputs:
       targetType: 'inline'
@@ -30,7 +30,7 @@ steps:
     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
    displayName: 'Install Azure CLI'
 
-  - script: |
+    script: |
       az login --service-principal -u $env:tfazAppID -p $env:SASPass --tenant $env:tenant_id
     displayName: 'Log Into Azure'
 

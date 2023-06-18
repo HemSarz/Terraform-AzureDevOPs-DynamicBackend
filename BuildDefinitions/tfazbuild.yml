@@ -32,6 +32,12 @@ steps:
       
   - script: terraform version
     displayName: Terraform Version
+    
+  - task: TerraformCLI@0
+    inputs:
+        command: 'init'
+        backendType: 'azurerm'
+      
   
   - script: |
       tf_output=$(terraform output -json)

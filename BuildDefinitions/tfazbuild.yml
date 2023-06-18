@@ -18,15 +18,16 @@ variables:
     value: "60b8226d-3048-4a92-b759-c99f388752a1"
 
 steps:
+
  - script: |
-      tf_output=$(terraform output -json)
-    tfazhh=$(echo $tf_output | jq -r '.tfazhh.value')
+    tf_output=$(terraform output -json)
+      tfazhh=$(echo $tf_output | jq -r '.tfazhh.value')
       SPNPass=$(echo $tf_output | jq -r '.SPNPass.value')
       STGPass=$(echo $tf_output | jq -r '.STGPass.value')
       echo "##vso[task.setvariable variable=tfazhh]$tfazhh"
       echo "##vso[task.setvariable variable=SPNPass]$SPNPass"
       echo "##vso[task.setvariable variable=STGPass]$STGPass"
-    displayName: 'Get Terraform Outputs'
+      displayName: 'Get Terraform Outputs'
 
  - task: TerraformInstaller@0
     inputs:

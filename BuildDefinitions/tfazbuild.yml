@@ -25,6 +25,7 @@ variables:
         $env:ARM_CLIENT_ID = "$(tfazhh)"
         $env:ARM_CLIENT_SECRET = "$(SPNPass)"
         $env:ARM_CLIENT_SECRET = "$(STGPass)"
+  
   - task: AzureCLI@2
     displayName: 'Install Azure CLI'
 

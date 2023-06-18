@@ -36,7 +36,7 @@ steps:
   - task: TerraformCLI@0
     inputs:
         command: 'init'
-        backendType: 'azurerm'
+        backendType: 'local'
       
   
   - script: |

@@ -18,7 +18,6 @@ variables:
     value: "60b8226d-3048-4a92-b759-c99f388752a1"
 
 steps:
-
  - script: |
     tf_output=$(terraform output -json)
       tfazhh=$(echo $tf_output | jq -r '.tfazhh.value')
@@ -30,9 +29,9 @@ steps:
       displayName: 'Get Terraform Outputs'
 
  - task: TerraformInstaller@0
+    displayName: install terraform
     inputs:
       terraformVersion: latest
-    displayName: install terraform
   - script: terraform version
     displayName: Terraform Version
   - script: az login --service-principal -u $(tfazhh) -p $(SPNPass) --tenant $(tenant_id)

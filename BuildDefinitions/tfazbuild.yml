@@ -32,7 +32,7 @@ steps:
     displayName: 'Install Azure CLI'
 
   - script: |
-      az login --service-principal -u $env:tfazhh -p $env:SASPass --tenant $(tenant_id)
+      az login --service-principal -u $env:ARM_CLIENT_ID -p $env:ARM_CLIENT_SECRET --tenant $env:tenant_id
     displayName: 'Log Into Azure'
 
   - script: |
@@ -51,7 +51,7 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/tfazlabro
 
   - script: |
-      terraform plan -var="client_id=$env:tfazhh" -var="client_secret=$env:SPNPass" -var="tenant_id=$(tenant_id) -var="subscription_id=$(subscription_id)" -var="admin_password=$(VMAdminPass)" -out="out.plan"
+      terraform plan -var="client_id=$env:ARM_CLIENT_ID" -var="client_secret=$env:ARM_CLIENT_SECRET" -var="tenant_id=$(tenant_id)" -var="subscription_id=$(subscription_id)" -var="admin_password=$(VMAdminPass)" -out="out.plan"
     displayName: 'Terraform Plan'
     workingDirectory: $(System.DefaultWorkingDirectory)/tfazlabro
 

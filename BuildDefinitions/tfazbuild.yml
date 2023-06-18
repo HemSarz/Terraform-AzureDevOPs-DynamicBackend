@@ -34,7 +34,6 @@ steps:
   - script: |
       az login --service-principal -u $env:tfazAppID -p $env:SASPass --tenant $(tenant_id)
     displayName: 'Log Into Azure'
-    displayName: 'Log Into Azure'
 
   - script: |
       # Install Terraform

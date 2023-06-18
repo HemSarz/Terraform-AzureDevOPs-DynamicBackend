@@ -1,1 +1,22 @@
-{}
+{
+  "SASPass": {
+    "sensitive": true,
+    "type": "string",
+    "value": "J1dny1TPguBqWevRk0o1JGUHmy2s2+gqEM0vEg4MoarEPAl8tpdMvQg0UAxFkyQzQEzAxIFWY7eQ+AStdpHJRg=="
+  },
+  "SPNPass": {
+    "sensitive": true,
+    "type": "string",
+    "value": "6k68Q~MA~9mWybD~ePMwctcv6C-oPSvBShU4Ab~T"
+  },
+  "project_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "952a0877-a775-45d9-8abc-8833947d8f9e"
+  },
+  "tfazAppID": {
+    "sensitive": true,
+    "type": "string",
+    "value": "cad33b24-0167-4ce4-8c1c-6aa66f9b7a23"
+  }
+}

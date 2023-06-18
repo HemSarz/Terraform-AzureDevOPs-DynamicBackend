@@ -24,6 +24,15 @@ variables:
     value: ""
 
 steps:
+  
+  - task: TerraformInstaller@0
+    displayName: install terraform
+    inputs:
+      terraformVersion: latest
+      
+  - script: terraform version
+    displayName: Terraform Version
+  
   - script: |
       tf_output=$(terraform output -json)
       tfazhh=$(echo $tf_output | jq -r '.tfazhh.value')
@@ -36,14 +45,6 @@ steps:
       Write-Host "##vso[task.setvariable variable=SPNPass]$SPNPass"
       Write-Host "##vso[task.setvariable variable=SPNPass]$STGPass"
     displayName: 'Get Terraform Outputs'
-
-  - task: TerraformInstaller@0
-    displayName: install terraform
-    inputs:
-      terraformVersion: latest
-
-  - script: terraform version
-    displayName: Terraform Version
 
   - script: az login --service-principal --username $(tfazhh) --password $(SPNPass) --tenant $(tenant_id)
     displayName: 'Log Into Azure'

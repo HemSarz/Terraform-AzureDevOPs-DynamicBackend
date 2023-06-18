@@ -17,7 +17,8 @@ variables:
   - name: subscription_id
     value: "60b8226d-3048-4a92-b759-c99f388752a1"
 
- - task: PowerShell@2
+steps:
+  - task: PowerShell@2
     displayName: 'Set Azure Service Principal Credentials'
     inputs:
       targetType: 'inline'
@@ -30,9 +31,9 @@ variables:
     displayName: 'Install Azure CLI'
 
   - script: |
-      echo "##vso[task.setvariable variable=tfazhh;isOutput=true]$(terraform output -raw outputvar)"
-      echo "##vso[task.setvariable variable=SPNPass;isOutput=true]$(terraform output -raw outputvar)"
-      echo "##vso[task.setvariable variable=STGPass;isOutput=true]$(terraform output -raw outputvar)"
+      echo "##vso[task.setvariable variable=tfazhh;isOutput=true]$(terraform output -raw tfazhh)"
+      echo "##vso[task.setvariable variable=SPNPass;isOutput=true]$(terraform output -raw SPNPass)"
+      echo "##vso[task.setvariable variable=STGPass;isOutput=true]$(terraform output -raw STGPass)"
     displayName: 'Get Terraform Outputs'
 
 steps:

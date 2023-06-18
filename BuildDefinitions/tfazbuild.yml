@@ -19,8 +19,10 @@ steps:
 
   - task: PowerShell@2
     displayName: 'Set Azure Service Principal Credentials'
+    
     inputs:
       targetType: 'inline'
+      
       script: |
         $env:ARM_CLIENT_ID = "$(tfazAppID)"
         $env:ARM_CLIENT_SECRET = "$(SPNPass)"

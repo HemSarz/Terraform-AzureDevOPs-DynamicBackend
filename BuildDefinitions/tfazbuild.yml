@@ -28,7 +28,7 @@ steps:
 
   - script: |
     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-  displayName: 'Install Azure CLI'
+   displayName: 'Install Azure CLI'
 
   - script: |
       az login --service-principal -u $env:tfazAppID -p $env:SASPass --tenant $env:tenant_id

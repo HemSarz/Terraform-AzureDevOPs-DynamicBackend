@@ -25,14 +25,14 @@ steps:
         $env:ARM_CLIENT_SECRET = "$(SPNPass)"
         $env:ARM_TENANT_ID = "$(tenant_id)"
         $env:ARM_SUBSCRIPTION_ID = "$(subscription_id)"
+        
+    - script: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      displayName: 'Install Azure CLI'
 
-  - script: |
-    curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-   displayName: 'Install Azure CLI'
-
-    script: |
-      az login --service-principal -u $env:tfazAppID -p $env:SASPass --tenant $env:tenant_id
-    displayName: 'Log Into Azure'
+    - script: |
+       az login --service-principal -u $env:tfazAppID -p $env:SASPass --tenant $env:tenant_id
+      displayName: 'Log Into Azure'
 
   - script: |
       # Install Terraform

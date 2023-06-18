@@ -1,4 +1,4 @@
-output "tfazAppID" {
+output "tfazhh" {
   value     = data.azuread_application.tfazsp.application_id
   sensitive = true
 }

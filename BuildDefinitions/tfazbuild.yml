@@ -47,9 +47,9 @@ steps:
       echo "##vso[task.setvariable variable=tfazhh]$tfazhh"
       echo "##vso[task.setvariable variable=SPNPass]$SPNPass"
       echo "##vso[task.setvariable variable=STGPass]$STGPass"
-      Write-Host "##vso[task.setvariable variable=tfazhh]$tfazhh"
-      Write-Host "##vso[task.setvariable variable=SPNPass]$SPNPass"
-      Write-Host "##vso[task.setvariable variable=SPNPass]$STGPass"
+      echo "tfazhh=$tfazhh"
+      echo "SPNPass=$SPNPass"
+      echo "STGPass=$STGPass"
     displayName: 'Get Terraform Outputs'
 
   - script: az login --service-principal --username $(tfazhh) --password $(SPNPass) --tenant $(tenant_id)

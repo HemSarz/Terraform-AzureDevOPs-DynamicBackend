@@ -16,12 +16,13 @@ variables:
     value: "2b203c53-c460-43ff-88b3-cb8bb33c3fa9"
   - name: subscription_id
     value: "60b8226d-3048-4a92-b759-c99f388752a1"
-  -name: "tfazhh"
+  - name: "tfazhh"
     value: ""
-  -name: "STGPass"
+  - name: "STGPass"
     value: ""
-  -name: "SPNPass"
+  - name: "SPNPass"
     value: ""
+
 steps:
   - script: |
       tf_output=$(terraform output -json)

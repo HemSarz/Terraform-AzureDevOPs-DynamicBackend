@@ -13,9 +13,9 @@ pool:
 variables:
   - group: hawaVB
   - name: tenant_id
-    value: "2b203c53-c460-43ff-88b3-cb8bb33c3fa9"
+    value: "7afe75ee-20fb-4e79-93a6-9881f786e2d8"
   - name: subscription_id
-    value: "60b8226d-3048-4a92-b759-c99f388752a1"
+    value: "64208b73-267b-43b1-9bb1-649f128147e6"
   - name: tfazhh
     value: ""
   - name: STGPass

@@ -1,24 +1,24 @@
 variable "AZDO_ORG_SERVICE_URL" {
   type        = string
-  default     = "https://dev.azure.com/tfaz"
+  default     = "https://dev.azure.com/tfazlab"
   description = "description"
 }
 
 variable "AZDO_PERSONAL_ACCESS_TOKEN" {
   type        = string
-  default     = "d55bqk5kqlcru2sc47o4dbppxl2nwnl4xcoj3xi5ugscunlwodhq"
+  default     = "f6pvkwade64lhumh7gctvv46zssocb3cr4fz4u7dn3cul55t3s6q"
   description = "description"
 }
 
 variable "tenant_id" {
   type        = string
-  default     = "2b203c53-c460-43ff-88b3-cb8bb33c3fa9"
+  default     = "7afe75ee-20fb-4e79-93a6-9881f786e2d8"
   description = "description"
 }
 
 variable "subscription_id" {
   type        = string
-  default     = "60b8226d-3048-4a92-b759-c99f388752a1"
+  default     = "64208b73-267b-43b1-9bb1-649f128147e6"
   description = "description"
 }
 
@@ -34,12 +34,6 @@ variable "rg_name" {
   description = "description"
 }
 
-variable "stg_access_key" {
-  type        = string
-  default     = ""
-  description = "description"
-}
-
 variable "VmAdminUser" {
   type        = string
   default     = "heha"
@@ -49,12 +43,6 @@ variable "VmAdminUser" {
 variable "VMAdminPass" {
   type        = string
   default     = "Acer2012."
-  description = "description"
-}
-
-variable "object_id_spn" {
-  type        = string
-  default     = "af3acd9c-9046-4786-9ad2-4ff46860f428"
   description = "description"
 }
 

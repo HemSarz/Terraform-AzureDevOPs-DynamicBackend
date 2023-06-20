@@ -82,13 +82,6 @@ variable "AzureAD_ApplicationName" {
   description = "description"
 }
 
-
-variable "sub-id" {
-  type        = string
-  default     = "payg"
-  description = "description"
-}
-
 variable "tfaz-proj" {
   type        = string
   default     = "tfaz-proj-infra"

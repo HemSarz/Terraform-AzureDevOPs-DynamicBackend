@@ -60,7 +60,7 @@ variable "location" {
 
 variable "storageAccount_name" {
   type        = string
-  default     = "hhstg01"
+  default     = "tfazstg"
   description = "description"
 }
 

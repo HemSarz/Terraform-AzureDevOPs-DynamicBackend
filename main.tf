@@ -75,6 +75,19 @@ resource "azurerm_key_vault_secret" "tfazstg-kv-sc" {
   key_vault_id = azurerm_key_vault.kv.id
 }
 
+resource "azurerm_key_vault_secret" "tfaz-tnt-kv-sc" {
+  name         = "tenant-id"
+  value        = data.azuread_client_config.current.tenant_id
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
+resource "azurerm_key_vault_secret" "tfaz-subid-kv-sc" {
+  name         = "subscription-id"
+  value        = data.azurerm_client_config.current.subscription_id
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
+
 ############ Azure Service Endpoint ############
 
 resource "azuredevops_serviceendpoint_azurerm" "AzServEndPoint" {

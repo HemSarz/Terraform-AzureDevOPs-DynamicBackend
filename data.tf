@@ -20,5 +20,5 @@ data "azuredevops_project" "tfazlab" {
 data "azuredevops_git_repository" "tfazrepo" {
   project_id = data.azuredevops_project.tfazlab.project_id
   name       = "tfazlab"
-  
+
 }

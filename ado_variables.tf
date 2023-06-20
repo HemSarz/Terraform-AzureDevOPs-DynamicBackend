@@ -5,10 +5,10 @@ resource "azuredevops_variable_group" "hawaVB" {
   allow_access = true
 
 
-key_vault {
-  name = azurerm_key_vault.kv.name
-  service_endpoint_id = azuredevops_serviceendpoint_azurerm.AzServEndPoint.id
-}
+  key_vault {
+    name                = azurerm_key_vault.kv.name
+    service_endpoint_id = azuredevops_serviceendpoint_azurerm.AzServEndPoint.id
+  }
   variable {
     name  = "SPNPass"
     value = azuread_application_password.tfazsp.value

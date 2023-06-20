@@ -54,6 +54,27 @@ resource "azurerm_key_vault_access_policy" "Current" {
   storage_permissions = ["Get", "List", "Set"]
 }
 
+############ KV Secrets ############
+
+resource "azurerm_key_vault_secret" "tfazspn-kv-sc" {
+  name         = "SPNPass"
+  value        = azuread_application_password.tfazsp.value
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
+
+resource "azurerm_key_vault_secret" "tfazappid-kv-sc" {
+  name         = "tfazAppID"
+  value        = azuread_service_principal.tfazsp.id
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
+resource "azurerm_key_vault_secret" "tfazstg-kv-sc" {
+  name         = "SASPass"
+  value        = azurerm_storage_account.stg.name
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
 ############ Azure Service Endpoint ############
 
 resource "azuredevops_serviceendpoint_azurerm" "AzServEndPoint" {
@@ -90,27 +111,6 @@ resource "azurerm_role_assignment" "main" {
   scope                = azurerm_key_vault.kv.id
   role_definition_name = "Contributor"
 }
-
-
-resource "azurerm_key_vault_secret" "tfazspn-kv-sc" {
-  name         = "SPNPass"
-  value        = azuread_application_password.tfazsp.value
-  key_vault_id = azurerm_key_vault.kv.id
-}
-
-
-resource "azurerm_key_vault_secret" "tfazappid-kv-sc" {
-  name         = "tfazAppID"
-  value        = azuread_application.tfazsp.application_id
-  key_vault_id = azurerm_key_vault.kv.id
-}
-
-resource "azurerm_key_vault_secret" "tfazstg-kv-sc" {
-  name         = "SASPass"
-  value        = azurerm_storage_account.stg.name
-  key_vault_id = azurerm_key_vault.kv.id
-}
-
 
 ############ Azure DevOps Pipeline ############
 

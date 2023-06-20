@@ -62,7 +62,6 @@ resource "azurerm_key_vault_secret" "tfazspn-kv-sc" {
   key_vault_id = azurerm_key_vault.kv.id
 }
 
-
 resource "azurerm_key_vault_secret" "tfazappid-kv-sc" {
   name         = "tfazAppID"
   value        = azuread_service_principal.tfazsp.id
@@ -86,7 +85,6 @@ resource "azurerm_key_vault_secret" "tfaz-subid-kv-sc" {
   value        = data.azurerm_client_config.current.subscription_id
   key_vault_id = azurerm_key_vault.kv.id
 }
-
 
 ############ Azure Service Endpoint ############
 

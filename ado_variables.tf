@@ -12,12 +12,6 @@ resource "azuredevops_variable_group" "hawaVB" {
 
 
   depends_on = [
-    azurerm_key_vault_secret.tfaz-subid-kv-sc,
-    azurerm_key_vault_secret.tfaz-tnt-kv-sc,
-    azurerm_key_vault_secret.tfazappid-kv-sc,
-    azurerm_key_vault_secret.tfazspn-kv-sc,
-    azurerm_key_vault_secret.tfazstg-kv-sc,
-    azurerm_key_vault_secret.tfaz-vmp-kv-sc,
     azurerm_key_vault_access_policy.current
   ]
 

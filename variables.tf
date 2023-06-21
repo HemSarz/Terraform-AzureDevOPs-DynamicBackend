@@ -72,7 +72,7 @@ variable "cont_name" {
 
 variable "keyvault_name" {
   type        = string
-  default     = "kv01h"
+  default     = "tfaz-kv01"
   description = "description"
 }
 

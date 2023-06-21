@@ -86,6 +86,12 @@ resource "azurerm_key_vault_secret" "tfaz-subid-kv-sc" {
   key_vault_id = azurerm_key_vault.kv.id
 }
 
+resource "azurerm_key_vault_secret" "stgname" {
+  name         = "stgname"
+  value        = data.azurerm_storage_account.stg.name
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
 ############ Azure Service Endpoint ############
 
 resource "azuredevops_serviceendpoint_azurerm" "AzServEndPoint" {

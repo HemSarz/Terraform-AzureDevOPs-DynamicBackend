@@ -40,23 +40,69 @@ resource "azurerm_key_vault" "kv" {
   enabled_for_disk_encryption     = true
   enabled_for_template_deployment = true
   purge_protection_enabled        = true
-}
 
-############ Access Policy KV ############
+  access_policy {
+    object_id      = data.azurerm_client_config.current.object_id
+    tenant_id      = data.azurerm_client_config.current.tenant_id
+    application_id = data.azurerm_client_config.current.client_id
 
-resource "azurerm_key_vault_access_policy" "current" {
-  key_vault_id = azurerm_key_vault.kv.id
-  object_id    = data.azurerm_client_config.current.object_id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  depends_on   = [azurerm_key_vault.kv]
-
-  key_permissions     = ["Get", "List", "Recover", ]
-  secret_permissions  = ["Get", "List", "Set", ]
-  storage_permissions = ["Get", "List", "Set", ]
+    key_permissions     = ["Get", "List", "Recover", ]
+    secret_permissions  = ["Get", "List", "Set", ]
+    storage_permissions = ["Get", "List", "Set", ]
+  }
 }
 
 ############ KV Secrets ############
 
+resource "azurerm_key_vault_secret" "tfazspn-kv-sc" {
+  name         = "SPNPass"
+  value        = azuread_application_password.tfazsp.value
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on   = [azurerm_key_vault.kv]
+
+}
+
+resource "azurerm_key_vault_secret" "tfazappid-kv-sc" {
+  name         = "tfazAppID"
+  value        = azuread_service_principal.tfazsp.application_id
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on   = [azurerm_key_vault.kv]
+}
+
+resource "azurerm_key_vault_secret" "tfazstg-kv-sc" {
+  name         = "SASPass"
+  value        = azurerm_storage_account.stg.name
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on   = [azurerm_key_vault.kv]
+}
+
+resource "azurerm_key_vault_secret" "tfaz-tnt-kv-sc" {
+  name         = "tenant-id"
+  value        = data.azuread_client_config.current.tenant_id
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on   = [azurerm_key_vault.kv]
+}
+
+resource "azurerm_key_vault_secret" "tfaz-subid-kv-sc" {
+  name         = "subscription-id"
+  value        = data.azurerm_client_config.current.subscription_id
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on   = [azurerm_key_vault.kv]
+}
+
+resource "azurerm_key_vault_secret" "stgname" {
+  name         = "stgname"
+  value        = data.azurerm_storage_account.stg.name
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on   = [azurerm_key_vault.kv]
+}
+
+resource "azurerm_key_vault_secret" "tfaz-vmp-kv-sc" {
+  name         = "VMAdminPass"
+  value        = var.VMAdminPass
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on   = [azurerm_key_vault.kv]
+}
 
 ############ Azure Service Endpoint ############
 

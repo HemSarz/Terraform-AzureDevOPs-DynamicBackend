@@ -22,38 +22,3 @@ data "azuredevops_git_repository" "tfazrepo" {
   name       = "tfazlab"
 
 }
-
-data "azurerm_key_vault_secret" "tfazspn-kv-sc" {
-  name         = "SPNPass"
-  key_vault_id = azurerm_key_vault.kv.id
-}
-
-data "azurerm_key_vault_secret" "tfazappid-kv-sc" {
-  name         = "tfazAppID"
-  key_vault_id = azurerm_key_vault.kv.id
-}
-
-data "azurerm_key_vault_secret" "tfazstg-kv-sc" {
-  name         = "SASPass"
-  key_vault_id = azurerm_key_vault.kv.id
-}
-
-data "azurerm_key_vault_secret" "tfaz-tnt-kv-sc" {
-  name         = "tenant-id"
-  key_vault_id = azurerm_key_vault.kv.id
-}
-
-data "azurerm_key_vault_secret" "tfaz-subid-kv-sc" {
-  name         = "subscription-id"
-  key_vault_id = azurerm_key_vault.kv.id
-}
-
-data "azurerm_key_vault_secret" "stgname" {
-  name         = "stgname"
-  key_vault_id = azurerm_key_vault.kv.id
-}
-
-data "azurerm_key_vault_secret" "tfaz-vmp-kv-sc" {
-  name         = "VMAdminPass"
-  key_vault_id = azurerm_key_vault.kv.id
-}

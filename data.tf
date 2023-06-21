@@ -23,11 +23,6 @@ data "azuredevops_git_repository" "tfazrepo" {
 
 }
 
-
-To create a data source for the secrets you mentioned, you can use the azurerm_key_vault_secret data source type. Here's an example of how you can define data sources for each secret:
-
-terraform
-Copy code
 data "azurerm_key_vault_secret" "tfazspn-kv-sc" {
   name         = "SPNPass"
   key_vault_id = azurerm_key_vault.kv.id

@@ -44,16 +44,25 @@ resource "azurerm_key_vault" "kv" {
   enabled_for_deployment          = true
   enabled_for_disk_encryption     = true
   enabled_for_template_deployment = true
-  purge_protection_enabled        = true
+  purge_protection_enabled        = false
 
   access_policy {
     object_id      = data.azurerm_client_config.current.object_id
     tenant_id      = data.azurerm_client_config.current.tenant_id
     application_id = data.azurerm_client_config.current.client_id
 
-    key_permissions     = ["Get", "List", "Recover", "Delete",]
+    key_permissions     = ["Get", "List", "Recover", "Delete", ]
     secret_permissions  = ["Get", "List", "Set", "Delete", ]
     storage_permissions = ["Get", "List", "Set", "Delete", ]
+  }
+
+  access_policy {
+    object_id = azuredevops_serviceendpoint_azurerm.AzServEndPoint.id
+    tenant_id = data.azurerm_client_config.current.tenant_id
+
+    key_permissions     = ["Get", "List", "Recover", "Delete"]
+    secret_permissions  = ["Get", "List", "Set", "Delete"]
+    storage_permissions = ["Get", "List", "Set", "Delete"]
   }
 }
 

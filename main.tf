@@ -50,8 +50,9 @@ resource "azurerm_key_vault_access_policy" "current" {
   tenant_id    = data.azurerm_client_config.current.tenant_id
   depends_on   = [azurerm_key_vault.kv]
 
-  secret_permissions  = ["Get", "List", "Set"]
-  storage_permissions = ["Get", "List", "Set"]
+  key_permissions     = ["Get", "List", "Recover", ]
+  secret_permissions  = ["Get", "List", "Set", ]
+  storage_permissions = ["Get", "List", "Set", ]
 }
 
 ############ KV Secrets ############
@@ -109,13 +110,13 @@ resource "azurerm_key_vault_secret" "tfaz-vmp-kv-sc" {
 ############ Azure Service Endpoint ############
 
 resource "azuredevops_serviceendpoint_azurerm" "AzServEndPoint" {
-  project_id                = data.azuredevops_project.tfazlab.id
-  service_endpoint_name     = "AZ Server Conn"
+  project_id            = data.azuredevops_project.tfazlab.id
+  service_endpoint_name = "AZ Server Conn"
   credentials {
     serviceprincipalid  = azuread_service_principal.tfazsp.application_id
     serviceprincipalkey = azuread_application_password.tfazsp.value
   }
-  
+
   azurerm_spn_tenantid      = data.azurerm_client_config.current.tenant_id
   azurerm_subscription_id   = data.azurerm_client_config.current.subscription_id
   azurerm_subscription_name = var.subscription_id

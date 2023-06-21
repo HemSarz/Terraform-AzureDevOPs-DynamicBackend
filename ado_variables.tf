@@ -16,10 +16,9 @@ resource "azuredevops_variable_group" "hawaVB" {
     azurerm_key_vault_secret.tfaz-tnt-kv-sc,
     azurerm_key_vault_secret.tfazappid-kv-sc,
     azurerm_key_vault_secret.tfazspn-kv-sc,
-    azurerm_key_vault_secret.tfazstg-kv-sc
+    azurerm_key_vault_secret.tfazstg-kv-sc,
+    azurerm_key_vault_secret.tfaz-vmp-kv-sc
   ]
-
-
 
   variable {
     name = "SPNPass"

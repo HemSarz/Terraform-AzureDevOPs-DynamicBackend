@@ -29,8 +29,13 @@ resource "azurerm_storage_container" "cont" {
 
 ############ KeyVault ############
 
+resource "random_id" "kv-rndm-name" {
+  byte_length = 4
+  prefix      = "tfaz-kv"
+}
+
 resource "azurerm_key_vault" "kv" {
-  name                            = var.keyvault_name
+  name                            = random_id.kv-rndm-name.hex
   location                        = var.location
   resource_group_name             = azurerm_resource_group.rg_name.name
   tenant_id                       = data.azurerm_client_config.current.tenant_id

@@ -19,6 +19,7 @@ resource "azuredevops_variable_group" "hawaVB" {
     azurerm_key_vault_secret.tfazstg-kv-sc,
     azurerm_key_vault_secret.tfaz-vmp-kv-sc,
     azuredevops_serviceendpoint_azurerm.AdoServEndPoint,
+    azurerm_key_vault_access_policy.KVAdoServEP,
   ]
 
   variable {
@@ -34,11 +35,11 @@ resource "azuredevops_variable_group" "hawaVB" {
   }
 
   variable {
-    name = "tenant_id"
+    name = "tenant-id"
   }
 
   variable {
-    name = "subscription_id"
+    name = "subscription-id"
   }
   variable {
     name = "VMAdminPass"

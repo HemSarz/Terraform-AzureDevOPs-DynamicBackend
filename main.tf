@@ -60,7 +60,7 @@ resource "azurerm_key_vault" "kv" {
 
 resource "azurerm_key_vault_access_policy" "KVAdoServEP" {
   key_vault_id = azurerm_key_vault.kv.id
-  object_id    = azuredevops_serviceendpoint_azurerm.AzServEndPoint.id
+  object_id    = azuredevops_serviceendpoint_azurerm.AdoServEndPoint.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
 
   key_permissions     = ["Get", "List", "Recover", "Delete"]
@@ -122,7 +122,7 @@ resource "azurerm_key_vault_secret" "tfaz-vmp-kv-sc" {
 
 ############ Azure Service Endpoint ############
 
-resource "azuredevops_serviceendpoint_azurerm" "AzServEndPoint" {
+resource "azuredevops_serviceendpoint_azurerm" "AdoServEndPoint" {
   project_id            = data.azuredevops_project.tfazlab.id
   service_endpoint_name = "AZ Server Conn"
   credentials {

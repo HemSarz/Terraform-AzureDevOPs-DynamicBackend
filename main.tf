@@ -58,7 +58,7 @@ resource "azurerm_key_vault" "kv" {
 }
 
 
-resource "azurerm_access_policy" "KVAdoServEP" {
+resource "azurerm_key_vault_access_policy" "KVAdoServEP" {
   key_vault_id = azurerm_key_vault.kv.id
   object_id    = azuredevops_serviceendpoint_azurerm.AzServEndPoint.id
   tenant_id    = data.azurerm_client_config.current.tenant_id

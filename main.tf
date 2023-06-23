@@ -142,10 +142,6 @@ resource "azuread_application" "tfazsp" {
   owners       = [data.azuread_client_config.current.object_id]
 }
 
-data "azuread_service_principal" "tfazsp" {
-  display_name = "tfazhh"
-}
-
 resource "azuread_service_principal" "tfazsp" {
   application_id = azuread_application.tfazsp.application_id
   owners         = [data.azuread_client_config.current.object_id]

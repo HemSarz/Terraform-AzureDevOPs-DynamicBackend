@@ -65,20 +65,9 @@ resource "azurerm_key_vault_access_policy" "KVAdoServEP" {
   tenant_id    = data.azurerm_client_config.current.tenant_id
   depends_on   = [azurerm_key_vault.kv]
 
-  key_permissions     = ["Get", "List", "Recover", "Delete"]
-  secret_permissions  = ["Get", "List", "Set", "Delete"]
-  storage_permissions = ["Get", "List", "Set", "Delete"]
-}
-
-resource "azurerm_key_vault_access_policy" "AdoServEndPoint" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azuredevops_serviceendpoint_azurerm.AdoServEndPoint.id
-
-  key_permissions     = ["Get", "List", "Recover", "Delete"]
-  secret_permissions  = ["Get", "List", "Set", "Delete"]
-  storage_permissions = ["Get", "List", "Set", "Delete"]
-
+ key_permissions     = ["Get", "List", "Recover", "Delete", "Purge"]
+  secret_permissions  = ["Get", "List", "Set", "Delete", "Purge"]
+  storage_permissions = ["Get", "List", "Set", "Delete", "Purge"]
 }
 
 ############ KV Secrets ############

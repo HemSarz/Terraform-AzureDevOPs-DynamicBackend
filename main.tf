@@ -40,7 +40,9 @@ resource "azurerm_key_vault" "kv" {
   resource_group_name             = azurerm_resource_group.rg_name.name
   tenant_id                       = data.azurerm_client_config.current.tenant_id
   depends_on                      = [azurerm_resource_group.rg_name]
+
   sku_name                        = "standard"
+
   enabled_for_deployment          = true
   enabled_for_disk_encryption     = true
   enabled_for_template_deployment = true
@@ -50,9 +52,9 @@ resource "azurerm_key_vault" "kv" {
     object_id      = data.azurerm_client_config.current.object_id
     tenant_id      = data.azurerm_client_config.current.tenant_id
 
-    key_permissions     = ["Get", "List", "Recover", "Delete"]
-    secret_permissions  = ["Get", "List", "Set", "Delete"]
-    storage_permissions = ["Get", "List", "Set", "Delete"]
+    key_permissions     = ["Get", "List", "Recover", "Delete", "Purge"]
+    secret_permissions  = ["Get", "List", "Set", "Delete", "Purge"]
+    storage_permissions = ["Get", "List", "Set", "Delete", "Purge"]
   }
 }
 

@@ -35,27 +35,28 @@ resource "random_id" "kv-rndm-name" {
 }
 
 resource "azurerm_key_vault" "kv" {
-  name                            = random_id.kv-rndm-name.hex
-  location                        = var.location
-  resource_group_name             = azurerm_resource_group.rg_name.name
-  tenant_id                       = data.azurerm_client_config.current.tenant_id
-  depends_on                      = [azurerm_resource_group.rg_name]
+  name                = random_id.kv-rndm-name.hex
+  location            = var.location
+  resource_group_name = azurerm_resource_group.rg_name.name
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+  depends_on          = [azurerm_resource_group.rg_name]
 
-  sku_name                        = "standard"
+  sku_name = "standard"
 
   enabled_for_deployment          = true
   enabled_for_disk_encryption     = true
   enabled_for_template_deployment = true
   purge_protection_enabled        = false
+}
 
-  access_policy {
-    object_id      = data.azurerm_client_config.current.object_id
-    tenant_id      = data.azurerm_client_config.current.tenant_id
+resource "azurerm_key_vault_access_policy" "Current" {
+  key_vault_id = azurerm_key_vault.kv.id
+  object_id    = data.azurerm_client_config.current.object_id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
 
-    key_permissions     = ["Get", "List", "Recover", "Delete", "Purge"]
-    secret_permissions  = ["Get", "List", "Set", "Delete", "Purge"]
-    storage_permissions = ["Get", "List", "Set", "Delete", "Purge"]
-  }
+  key_permissions     = ["Get", "List", "Recover", "Delete", "Purge"]
+  secret_permissions  = ["Get", "List", "Set", "Delete", "Purge"]
+  storage_permissions = ["Get", "List", "Set", "Delete", "Purge"]
 }
 
 resource "azurerm_key_vault_access_policy" "KVAdoServEP" {

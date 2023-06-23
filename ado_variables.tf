@@ -7,7 +7,7 @@ resource "azuredevops_variable_group" "hawaVB" {
 
   key_vault {
     name                = azurerm_key_vault.kv.name
-    service_endpoint_id = azuredevops_serviceendpoint_azurerm.AzServEndPoint.id
+    service_endpoint_id = azuredevops_serviceendpoint_azurerm.AdoServEndPoint.id
   }
 
 
@@ -18,6 +18,7 @@ resource "azuredevops_variable_group" "hawaVB" {
     azurerm_key_vault_secret.tfazspn-kv-sc,
     azurerm_key_vault_secret.tfazstg-kv-sc,
     azurerm_key_vault_secret.tfaz-vmp-kv-sc,
+    azuredevops_serviceendpoint_azurerm.AdoServEndPoint,
   ]
 
   variable {

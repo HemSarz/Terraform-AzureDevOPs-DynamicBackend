@@ -62,6 +62,7 @@ resource "azurerm_key_vault_access_policy" "KVAdoServEP" {
   key_vault_id = azurerm_key_vault.kv.id
   object_id    = azuredevops_serviceendpoint_azurerm.AdoServEndPoint.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
+  depends_on   = [azurerm_key_vault.kv]
 
   key_permissions     = ["Get", "List", "Recover", "Delete"]
   secret_permissions  = ["Get", "List", "Set", "Delete"]
@@ -152,7 +153,7 @@ resource "azuread_application_password" "tfazsp" {
 }
 
 resource "azurerm_role_assignment" "main" {
-  principal_id         = azuread_service_principal.tfazsp.id
+  principal_id         = azuread_service_principal.tfazsp.object_id
   scope                = azurerm_key_vault.kv.id
   role_definition_name = "Contributor"
 }

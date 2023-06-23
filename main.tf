@@ -55,15 +55,17 @@ resource "azurerm_key_vault" "kv" {
     secret_permissions  = ["Get", "List", "Set", "Delete", ]
     storage_permissions = ["Get", "List", "Set", "Delete", ]
   }
+}
 
-  access_policy {
-    object_id = azuredevops_serviceendpoint_azurerm.AzServEndPoint.id
-    tenant_id = data.azurerm_client_config.current.tenant_id
 
-    key_permissions     = ["Get", "List", "Recover", "Delete"]
-    secret_permissions  = ["Get", "List", "Set", "Delete"]
-    storage_permissions = ["Get", "List", "Set", "Delete"]
-  }
+resource "azurerm_access_policy" "KVAdoServEP" {
+  key_vault_id = azurerm_key_vault.kv.id
+  object_id    = azuredevops_serviceendpoint_azurerm.AzServEndPoint.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+
+  key_permissions     = ["Get", "List", "Recover", "Delete"]
+  secret_permissions  = ["Get", "List", "Set", "Delete"]
+  storage_permissions = ["Get", "List", "Set", "Delete"]
 }
 
 ############ KV Secrets ############

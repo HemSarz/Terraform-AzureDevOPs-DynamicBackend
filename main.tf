@@ -49,7 +49,6 @@ resource "azurerm_key_vault" "kv" {
   access_policy {
     object_id      = data.azurerm_client_config.current.object_id
     tenant_id      = data.azurerm_client_config.current.tenant_id
-    application_id = data.azurerm_client_config.current.client_id
 
     key_permissions     = ["Get", "List", "Recover", "Delete"]
     secret_permissions  = ["Get", "List", "Set", "Delete"]

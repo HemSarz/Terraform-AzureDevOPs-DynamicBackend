@@ -57,12 +57,11 @@ resource "azurerm_key_vault" "kv" {
   }
 }
 
-
 resource "azurerm_key_vault_access_policy" "KVAdoServEP" {
   key_vault_id = azurerm_key_vault.kv.id
-  object_id    = azuredevops_serviceendpoint_azurerm.AdoServEndPoint.id
+  object_id    = azuread_service_principal.tfazsp.object_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  depends_on   = [azurerm_key_vault.kv]
+  depends_on   = [azurerm_key_vault.kv, ]
 
   key_permissions     = ["Get", "List", "Recover", "Delete"]
   secret_permissions  = ["Get", "List", "Set", "Delete"]
@@ -141,6 +140,10 @@ resource "azuredevops_serviceendpoint_azurerm" "AdoServEndPoint" {
 resource "azuread_application" "tfazsp" {
   display_name = "tfazhh"
   owners       = [data.azuread_client_config.current.object_id]
+}
+
+data "azuread_service_principal" "tfazsp" {
+  display_name = "tfazhh"
 }
 
 resource "azuread_service_principal" "tfazsp" {

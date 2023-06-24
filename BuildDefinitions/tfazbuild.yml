@@ -16,12 +16,6 @@ variables:
     value: "7afe75ee-20fb-4e79-93a6-9881f786e2d8"
   - name: subscription_id
     value: "64208b73-267b-43b1-9bb1-649f128147e6"
-  - name: tfazhh
-    value: ""
-  - name: STGPass
-    value: ""
-  - name: SPNPass
-    value: ""
 
 steps:
   

@@ -63,7 +63,7 @@ resource "azurerm_key_vault" "kv" {
 
 resource "azurerm_key_vault_access_policy" "KVAdoServEP" {
   key_vault_id = azurerm_key_vault.kv.id
-  object_id    = azuread_service_principal.tfazsp.object_id
+  object_id    = azuredevops_serviceendpoint_azurerm.AdoServEndPoint.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   depends_on   = [azurerm_key_vault.kv]
 

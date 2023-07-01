@@ -26,6 +26,7 @@ steps:
     inputs:
         command: 'init'
         backendType: 'local'
+        workingDirectory: $(System.DefaultWorkingDirectory)/tfazlabro
       
   - script: az login --service-principal --username $(tfazAppID) --password $(SPNPass) --tenant $(tenant-id)
     displayName: 'Log Into Azure'

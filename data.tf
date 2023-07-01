@@ -13,6 +13,10 @@ data "azuread_application" "tfazsp" {
   depends_on = [azuread_application.tfazsp]
 }
 
+data "azuread_service_principal" "tfazspn" {
+  application_id = azuread_service_principal.tfazspn.application_id
+}
+
 data "azuredevops_project" "tfazlab" {
   name = "tfazlab"
 }

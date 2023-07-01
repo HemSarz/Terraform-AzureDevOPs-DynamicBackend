@@ -1,5 +1,5 @@
 output "tfazhh" {
-  value     = data.azuread_application.tfazsp.application_id
+  value     = data.azuread_service_principal.tfazspn.application_id
   sensitive = true
 }
 

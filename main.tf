@@ -84,6 +84,18 @@ resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
 
 }
 
+resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
+  key_vault_id = azurerm_key_vault.kv.id
+  object_id    = azuread_application.tfazsp.object_id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  depends_on   = [azurerm_key_vault.kv]
+
+  key_permissions     = ["Get", "List", "Recover", "Delete", "Purge"]
+  secret_permissions  = ["Get", "List", "Set", "Delete", "Purge"]
+  storage_permissions = ["Get", "List", "Set", "Delete", "Purge"]
+
+}
+
 ############ KV Secrets ############
 
 resource "azurerm_key_vault_secret" "tfazspn-kv-sc" {

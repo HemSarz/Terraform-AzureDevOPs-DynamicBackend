@@ -84,7 +84,7 @@ resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
 
 }
 
-resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
+resource "azurerm_key_vault_access_policy" "tfaz-appspn-access-kv" {
   key_vault_id = azurerm_key_vault.kv.id
   object_id    = azuread_application.tfazsp.object_id
   tenant_id    = data.azurerm_client_config.current.tenant_id

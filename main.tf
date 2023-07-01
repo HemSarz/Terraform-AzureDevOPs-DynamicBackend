@@ -50,8 +50,8 @@ resource "azurerm_key_vault" "kv" {
 
 
   access_policy {
-    object_id      = data.azurerm_client_config.current.object_id
-    tenant_id      = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+    tenant_id = data.azurerm_client_config.current.tenant_id
 
 
     key_permissions     = ["Get", "List", "Recover", "Delete"]
@@ -72,6 +72,18 @@ resource "azurerm_key_vault_access_policy" "KVAdoServEP" {
   storage_permissions = ["Get", "List", "Set", "Delete", "Purge"]
 }
 
+resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
+  key_vault_id = azurerm_key_vault.kv.id
+  object_id    = azuread_service_principal.tfazspn.object_id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  depends_on   = [azurerm_key_vault.kv]
+
+  key_permissions     = ["Get", "List", "Recover", "Delete", "Purge"]
+  secret_permissions  = ["Get", "List", "Set", "Delete", "Purge"]
+  storage_permissions = ["Get", "List", "Set", "Delete", "Purge"]
+
+}
+
 ############ KV Secrets ############
 
 resource "azurerm_key_vault_secret" "tfazspn-kv-sc" {
@@ -84,7 +96,7 @@ resource "azurerm_key_vault_secret" "tfazspn-kv-sc" {
 
 resource "azurerm_key_vault_secret" "tfazappid-kv-sc" {
   name         = "tfazAppID"
-  value        = azuread_service_principal.tfazsp.application_id
+  value        = azuread_service_principal.tfazspn.application_id
   key_vault_id = azurerm_key_vault.kv.id
   depends_on   = [azurerm_key_vault.kv]
 }
@@ -130,7 +142,7 @@ resource "azuredevops_serviceendpoint_azurerm" "AdoServEndPoint" {
   project_id            = data.azuredevops_project.tfazlab.id
   service_endpoint_name = "AZ Server Conn"
   credentials {
-    serviceprincipalid  = azuread_service_principal.tfazsp.application_id
+    serviceprincipalid  = azuread_service_principal.tfazspn.application_id
     serviceprincipalkey = azuread_application_password.tfazsp.value
   }
 
@@ -146,7 +158,7 @@ resource "azuread_application" "tfazsp" {
   owners       = [data.azuread_client_config.current.object_id]
 }
 
-resource "azuread_service_principal" "tfazsp" {
+resource "azuread_service_principal" "tfazspn" {
   application_id = azuread_application.tfazsp.application_id
   owners         = [data.azuread_client_config.current.object_id]
 }
@@ -156,7 +168,7 @@ resource "azuread_application_password" "tfazsp" {
 }
 
 resource "azurerm_role_assignment" "main" {
-  principal_id         = azuread_service_principal.tfazsp.object_id
+  principal_id         = azuread_service_principal.tfazspn.id
   scope                = azurerm_key_vault.kv.id
   role_definition_name = "Contributor"
 }

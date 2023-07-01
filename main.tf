@@ -181,7 +181,7 @@ resource "azuread_application_password" "tfazsp" {
 
 resource "azurerm_role_assignment" "main" {
   principal_id         = azuread_service_principal.tfazspn.id
-  scope                = azurerm_key_vault.kv.id
+  scope                = data.azurerm_subscription.primary.id
   role_definition_name = "Contributor"
 }
 

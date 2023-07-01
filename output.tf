@@ -23,13 +23,16 @@ output "project_id" {
 #### infraVB
 
 output "rg_name" {
-  value = azurerm_resource_group.rg_name.name
+  value     = azurerm_resource_group.rg_name.name
+  sensitive = true
 }
 
 output "storage_account_name" {
-  value = azurerm_storage_account.stg.name
+  value     = azurerm_storage_account.stg.name
+  sensitive = true
 }
 
 output "cont-name" {
-  value = azurerm_storage_container.cont.name
+  value     = azurerm_storage_container.cont.name
+  sensitive = true
 }

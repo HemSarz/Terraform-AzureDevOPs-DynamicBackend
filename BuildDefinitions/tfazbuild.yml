@@ -12,6 +12,7 @@ pool:
 
 variables:
   - group: hawaVB
+  - group: infraVB
 
 steps:
   - task: TerraformInstaller@0

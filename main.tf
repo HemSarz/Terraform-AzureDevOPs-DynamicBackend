@@ -54,9 +54,9 @@ resource "azurerm_key_vault" "kv" {
     tenant_id = data.azurerm_client_config.current.tenant_id
 
 
-    key_permissions     = ["Get", "List", "Recover", "Delete"]
-    secret_permissions  = ["Get", "List", "Set", "Delete"]
-    storage_permissions = ["Get", "List", "Set", "Delete"]
+    key_permissions     = ["Get", "List", "Recover", "Delete", "Purge", "Recover"]
+    secret_permissions  = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
+    storage_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
 
   }
 }
@@ -67,9 +67,9 @@ resource "azurerm_key_vault_access_policy" "KVAdoServEP" {
   tenant_id    = data.azurerm_client_config.current.tenant_id
   depends_on   = [azurerm_key_vault.kv]
 
-  key_permissions     = ["Get", "List", "Recover", "Delete", "Purge"]
-  secret_permissions  = ["Get", "List", "Set", "Delete", "Purge"]
-  storage_permissions = ["Get", "List", "Set", "Delete", "Purge"]
+  key_permissions     = ["Get", "List", "Recover", "Delete", "Purge", "Recover"]
+  secret_permissions  = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
+  storage_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
 }
 
 resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
@@ -78,9 +78,9 @@ resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
   tenant_id    = data.azurerm_client_config.current.tenant_id
   depends_on   = [azurerm_key_vault.kv]
 
-  key_permissions     = ["Get", "List", "Recover", "Delete", "Purge"]
-  secret_permissions  = ["Get", "List", "Set", "Delete", "Purge"]
-  storage_permissions = ["Get", "List", "Set", "Delete", "Purge"]
+  key_permissions     = ["Get", "List", "Recover", "Delete", "Purge", "Recover"]
+  secret_permissions  = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
+  storage_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
 
 }
 

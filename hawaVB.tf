@@ -1,7 +1,7 @@
 resource "azuredevops_variable_group" "hawaVB" {
   project_id   = data.azuredevops_project.tfazlab.id
   name         = "hawaVB"
-  description  = "This Variable Group should be linked to an Azure Key Vault"
+  description  = "ConnVB"
   allow_access = true
 
 
@@ -18,6 +18,8 @@ resource "azuredevops_variable_group" "hawaVB" {
     azurerm_key_vault_secret.tfazspn-kv-sc,
     azurerm_key_vault_secret.tfazstg-kv-sc,
     azurerm_key_vault_secret.tfaz-vmp-kv-sc,
+    azurerm_key_vault_secret.tfaz-ContName-kv-sc,
+    azurerm_key_vault_secret.tfaz-RGName-kv-sc,
     azuredevops_serviceendpoint_azurerm.AdoServEndPoint,
     azurerm_key_vault_access_policy.KVAdoServEP,
   ]
@@ -35,11 +37,11 @@ resource "azuredevops_variable_group" "hawaVB" {
   }
 
   variable {
-    name = "tenant-id"
+    name = "TNTid"
   }
 
   variable {
-    name = "subscription-id"
+    name = "SUBid"
   }
   variable {
     name = "VMAdminPass"

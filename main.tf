@@ -84,18 +84,6 @@ resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
 
 }
 
-resource "azurerm_key_vault_access_policy" "tfaz-appspn-access-kv" {
-  key_vault_id = azurerm_key_vault.kv.id
-  object_id    = azuread_application.tfazsp.object_id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  depends_on   = [azurerm_key_vault.kv]
-
-  key_permissions     = ["Get", "List", "Recover", "Delete", "Purge"]
-  secret_permissions  = ["Get", "List", "Set", "Delete", "Purge"]
-  storage_permissions = ["Get", "List", "Set", "Delete", "Purge"]
-
-}
-
 ############ KV Secrets ############
 
 resource "azurerm_key_vault_secret" "tfazspn-kv-sc" {
@@ -114,28 +102,28 @@ resource "azurerm_key_vault_secret" "tfazappid-kv-sc" {
 }
 
 resource "azurerm_key_vault_secret" "tfazstg-kv-sc" {
-  name         = "SASPass"
+  name         = "STGPass"
   value        = azurerm_storage_account.stg.name
   key_vault_id = azurerm_key_vault.kv.id
   depends_on   = [azurerm_key_vault.kv]
 }
 
 resource "azurerm_key_vault_secret" "tfaz-tnt-kv-sc" {
-  name         = "tenant-id"
+  name         = "TNTid"
   value        = data.azuread_client_config.current.tenant_id
   key_vault_id = azurerm_key_vault.kv.id
   depends_on   = [azurerm_key_vault.kv]
 }
 
 resource "azurerm_key_vault_secret" "tfaz-subid-kv-sc" {
-  name         = "subscription-id"
+  name         = "SUBid"
   value        = data.azurerm_client_config.current.subscription_id
   key_vault_id = azurerm_key_vault.kv.id
   depends_on   = [azurerm_key_vault.kv]
 }
 
-resource "azurerm_key_vault_secret" "stgname" {
-  name         = "stgname"
+resource "azurerm_key_vault_secret" "tfaz-STGName-kv-sc" {
+  name         = "STGname"
   value        = data.azurerm_storage_account.stg.name
   key_vault_id = azurerm_key_vault.kv.id
   depends_on   = [azurerm_key_vault.kv]
@@ -144,6 +132,20 @@ resource "azurerm_key_vault_secret" "stgname" {
 resource "azurerm_key_vault_secret" "tfaz-vmp-kv-sc" {
   name         = "VMAdminPass"
   value        = var.VMAdminPass
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on   = [azurerm_key_vault.kv]
+}
+
+resource "azurerm_key_vault_secret" "tfaz-RGName-kv-sc" {
+  name         = "RGName"
+  value        = azurerm_resource_group.rg_name.name
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on   = [azurerm_key_vault.kv]
+}
+
+resource "azurerm_key_vault_secret" "tfaz-ContName-kv-sc" {
+  name         = "ContName"
+  value        = azurerm_storage_container.cont.name
   key_vault_id = azurerm_key_vault.kv.id
   depends_on   = [azurerm_key_vault.kv]
 }

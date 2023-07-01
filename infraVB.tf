@@ -11,19 +11,20 @@ resource "azuredevops_variable_group" "infraVB" {
   }
 
   depends_on = [
+    azuredevops_variable_group.hawaVB,
     azuredevops_serviceendpoint_azurerm.AdoServEndPoint,
     azurerm_key_vault_access_policy.KVAdoServEP,
   ]
 
   variable {
-    name = "rg_name"
+    name = "RGName"
   }
 
   variable {
-    name = "storage_account_name"
+    name = "STGName"
   }
 
   variable {
-    name = "cont_name"
+    name = "ContName"
   }
 }

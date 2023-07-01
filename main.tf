@@ -180,7 +180,7 @@ resource "azuread_application_password" "tfazsp" {
 }
 
 resource "azurerm_role_assignment" "main" {
-  principal_id         = azuread_service_principal.tfazspn.id
+  principal_id         = azuread_application.tfazsp.id
   scope                = azurerm_key_vault.kv.id
   role_definition_name = "Contributor"
 }

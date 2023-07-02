@@ -210,7 +210,7 @@ resource "azuredevops_build_definition" "DeployPipeline" {
     use_yaml = true
   }
 
-  variable_groups = [azuredevops_variable_group.hawaVB.id, azuredevops_variable_group.infraVB]
+  variable_groups = [azuredevops_variable_group.hawaVB.id, azuredevops_variable_group.infraVB.id]
 
   repository {
     repo_type   = "TfsGit"

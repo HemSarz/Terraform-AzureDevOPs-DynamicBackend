@@ -25,9 +25,9 @@ steps:
     displayName: Terraform Init
     workingDirectory: $(System.DefaultWorkingDirectory)
   - script: >-
-      terraform plan
-    displayName: Terraform Plan -lock=false
+      terraform plan -lock=false
+    displayName: Terraform Plan 
     workingDirectory: $(System.DefaultWorkingDirectory)
-  - script: terraform apply
+  - script: terraform apply -lock=false
     displayName: Terraform Apply 
     workingDirectory: $(System.DefaultWorkingDirectory)

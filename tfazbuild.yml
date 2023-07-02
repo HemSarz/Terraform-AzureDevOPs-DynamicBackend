@@ -20,6 +20,9 @@ steps:
     displayName: Terraform Version
   - script:  az login --service-principal -u $(tfazAppID) -p $(SPNPass) --tenant $(TNTid)
     displayName: 'Log Into Azure'
+  - script: terraform init -backend-config=resource_group_name=$(RGName) -backend-config="storage_account_name=$(STGName)" -backend-config="container_name=$(ContName)" -backend-config="access_key=$(STGPass)" -backend-config="key=$(terraform.tfstate)"
+    displayName: "Terraform Init"
+    workingDirectory: $(System.DefaultWorkingDirectory)/tfazlabro
   - script: terraform plan -var="client_id=$(tfazAppID)" -var="client_secret=$(SPNPass)" -var="tenant_id=$(TNTid)" -var="subscription_id=$(SUBid)" -var="admin_password=$(VMAdminPass)" -out="out.plan"
     displayName: Terraform Plan
     workingDirectory: $(System.DefaultWorkingDirectory)/tfazlabro

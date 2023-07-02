@@ -21,11 +21,7 @@ steps:
       $(TNTid)
     displayName: Log Into Azure
   - script: >-
-      terraform init -backend-config=resource_group_name=$(RGName)
-      -backend-config="storage_account_name=$(STGName)"
-      -backend-config="container_name=$(ContName)"
-      -backend-config="access_key=$(STGPass)"
-      -backend-config="key=$(terraform.tfstate)"
+      terraform init
     displayName: Terraform Init
     workingDirectory: $(System.DefaultWorkingDirectory)
   - script: >-

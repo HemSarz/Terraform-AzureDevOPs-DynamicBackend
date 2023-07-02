@@ -220,6 +220,7 @@ resource "null_resource" "backend_setup" {
       $backendConfig = @'
       terraform {
         backend "azurerm" {
+          resource_group_name = azurerm_resource_group.rg_name.name
           storage_account_name = "${azurerm_storage_account.stg.name}"
           container_name       = "${azurerm_storage_container.cont.name}"
           key                  = "terraform.tfstate"
@@ -242,6 +243,6 @@ resource "null_resource" "backend_setup" {
 }
 
 output "backend_access_key" {
-  value     = azurerm_storage_account.tfaz-stg-infra.primary_access_key
+  value     = azurerm_storage_account.stg.primary_access_key
   sensitive = true
 }

@@ -231,6 +231,13 @@ resource "azuredevops_build_definition" "DeployPipeline" {
 }
 
 
+resource "azurerm_storage_container" "MyResource" {
+  name                  = "vhds"
+  resource_group_name   = azurerm_resource_group.rg_name.name
+  storage_account_name  = azurerm_storage_account.stg.name
+  container_access_type = "private"
+}
+
 resource "null_resource" "backend_setup" {
   provisioner "local-exec" {
     command = <<-EOT

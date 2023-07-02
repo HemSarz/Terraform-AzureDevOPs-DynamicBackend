@@ -19,7 +19,6 @@ output "project_id" {
   value = data.azuredevops_project.tfazlab.project_id
 }
 
-
 #### infraVB
 
 output "RGName" {

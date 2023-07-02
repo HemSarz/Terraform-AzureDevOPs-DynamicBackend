@@ -29,13 +29,8 @@ resource "azurerm_storage_container" "cont" {
 
 ############ KeyVault ############
 
-resource "random_id" "kv-rndm-name" {
-  byte_length = 4
-  prefix      = "tfaz-kv"
-}
-
 resource "azurerm_key_vault" "kv" {
-  name                = random_id.kv-rndm-name.hex
+  name                = "tfaz-kv-infra"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg_name.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
@@ -217,4 +212,36 @@ resource "azuredevops_build_definition" "DeployPipeline" {
     branch_name = "main"
     yml_path    = "tfazbuild.yml"
   }
+}
+
+resource "null_resource" "backend_setup" {
+  provisioner "local-exec" {
+    command = <<-EOT
+      $backendConfig = @'
+      terraform {
+        backend "azurerm" {
+          storage_account_name = "${azurerm_storage_account.stg.name}"
+          container_name       = "${azurerm_storage_container.cont.name}"
+          key                  = "terraform.tfstate"
+          access_key           = "${azurerm_storage_account.stg.primary_access_key}"
+        }
+      }
+      '@
+
+      Set-Content -Path "${path.module}/backend.tf" -Value $backendConfig
+    EOT
+
+    interpreter = ["PowerShell", "-Command"]
+  }
+
+  depends_on = [
+    azurerm_storage_account.stg,
+    azurerm_resource_group.rg_name,
+    azurerm_storage_container.cont,
+  ]
+}
+
+output "backend_access_key" {
+  value     = azurerm_storage_account.tfaz-stg-infra.primary_access_key
+  sensitive = true
 }

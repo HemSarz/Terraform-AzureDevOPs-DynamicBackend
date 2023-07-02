@@ -14,31 +14,18 @@ variables:
   - group: hawaVB
 
 steps:
-  - task: TerraformInstaller@0
-    displayName: install terraform
-    inputs:
-      terraformVersion: latest
-      
+  - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+    displayName: 'Install Terraform'
   - script: terraform version
     displayName: Terraform Version
-    
-  - task: TerraformCLI@0
-    inputs:
-        command: 'init'
-        backendType: 'local'
-        workingDirectory: $(System.DefaultWorkingDirectory)/tfazlabro
-      
-  - script: az login --service-principal --username $(tfazAppID) --password $(SPNPass) --tenant $(TNTid)
+  - script:  az login --service-principal -u $(tfazAppID) -p $(SPNPass) --tenant $(TNTid)
     displayName: 'Log Into Azure'
-
   - script: terraform init -backend-config=resource_group_name=$(RGName) -backend-config="storage_account_name=$(STGName)" -backend-config="container_name=$(ContName)" -backend-config="access_key=$(STGPass)" -backend-config="key=$(state_file)"
     displayName: "Terraform Init"
     workingDirectory: $(System.DefaultWorkingDirectory)/tfazlabro
-
   - script: terraform plan -var="client_id=$(tfazAppID)" -var="client_secret=$(SPNPass)" -var="tenant_id=$(TNTid)" -var="subscription_id=$(SUBid)" -var="admin_password=$(VMAdminPass)" -out="out.plan"
     displayName: Terraform Plan
     workingDirectory: $(System.DefaultWorkingDirectory)/tfazlabro
-
   - script: terraform apply out.plan
     displayName: 'Terraform Apply'
     workingDirectory: $(System.DefaultWorkingDirectory)/tfazlabro

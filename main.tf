@@ -215,6 +215,6 @@ resource "azuredevops_build_definition" "DeployPipeline" {
     repo_type   = "TfsGit"
     repo_id     = data.azuredevops_git_repository.tfazrepo.id
     branch_name = "main"
-    yml_path    = "./BuildDefinitions/tfazbuild.yml"
+    yml_path    = "tfazbuild.yml"
   }
 }

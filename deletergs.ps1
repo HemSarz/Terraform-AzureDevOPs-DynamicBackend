@@ -1,6 +1,4 @@
-Write-Host "Deleting "backend.tf" & "Terraform folder"..."
-Remove-Item -Path "backend.tf" -Force ; Remove-Item -Path ".terraform" -Force -Recurse
-
+terraform init
 Write-Host "Deleting Azure resource groups..."
 az group delete --name rg01hh --yes
 

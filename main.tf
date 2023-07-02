@@ -72,9 +72,9 @@ resource "azurerm_key_vault_access_policy" "KVAdoServEP" {
   storage_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
 }
 
-resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
+resource "azurerm_key_vault_access_policy" "tfaz-appspn-access-kv" {
   key_vault_id = azurerm_key_vault.kv.id
-  object_id    = azuread_service_principal.tfazspn.object_id
+  object_id    = azuread_application.tfazsp.object_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   depends_on   = [azurerm_key_vault.kv]
 
@@ -83,9 +83,9 @@ resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
   storage_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
 }
 
-resource "azurerm_key_vault_access_policy" "tfaz-appspn-access-kv" {
+resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
   key_vault_id = azurerm_key_vault.kv.id
-  object_id    = azuread_application.tfazsp.object_id
+  object_id    = azuread_service_principal.tfazspn.object_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   depends_on   = [azurerm_key_vault.kv]
 
@@ -133,7 +133,7 @@ resource "azurerm_key_vault_secret" "tfaz-subid-kv-sc" {
 }
 
 resource "azurerm_key_vault_secret" "tfaz-STGName-kv-sc" {
-  name         = "STGname"
+  name         = "STGName"
   value        = azurerm_storage_account.stg.name
   key_vault_id = azurerm_key_vault.kv.id
   depends_on   = [azurerm_key_vault.kv]
@@ -209,7 +209,7 @@ resource "azuredevops_build_definition" "DeployPipeline" {
     use_yaml = true
   }
 
-  variable_groups = [azuredevops_variable_group.hawaVB.id, azuredevops_variable_group.infraVB.id]
+  variable_groups = [azuredevops_variable_group.hawaVB.id]
 
   repository {
     repo_type   = "TfsGit"

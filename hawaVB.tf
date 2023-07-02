@@ -47,4 +47,16 @@ resource "azuredevops_variable_group" "hawaVB" {
   variable {
     name = "VMAdminPass"
   }
+
+  variable {
+    name = "RGName"
+  }
+
+  variable {
+    name = "STGName"
+  }
+
+  variable {
+    name = "ContName"
+  }
 }

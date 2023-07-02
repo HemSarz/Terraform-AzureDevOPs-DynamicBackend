@@ -28,6 +28,6 @@ steps:
       terraform plan
     displayName: Terraform Plan
     workingDirectory: $(System.DefaultWorkingDirectory)
-  - script: terraform apply
-    displayName: Terraform Apply -auto-approve
+  - script: terraform apply -auto-approve
+    displayName: Terraform Apply 
     workingDirectory: $(System.DefaultWorkingDirectory)

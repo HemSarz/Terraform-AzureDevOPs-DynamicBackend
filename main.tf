@@ -213,3 +213,38 @@ resource "azuredevops_build_definition" "DeployPipeline" {
     yml_path    = "tfazbuild.yml"
   }
 }
+
+
+resource "null_resource" "backend_setup" {
+  provisioner "local-exec" {
+    command = <<-EOT
+      $backendConfig = @'
+      terraform {
+        backend "azurerm" {
+          resource_group_name  = "${azurerm_resource_group.rg_name.name}"
+          storage_account_name = "${azurerm_storage_account.stg.name}"
+          container_name       = "${azurerm_storage_container.cont.name}"
+          key                  = "terraform.tfstate"
+          access_key           = "${azurerm_storage_account.stg.primary_access_key}"
+        }
+      }
+      '@
+
+      Set-Content -Path "${path.module}/backend.tf" -Value $backendConfig
+    EOT
+
+    interpreter = ["PowerShell", "-Command"]
+  }
+
+  depends_on = [
+    azurerm_storage_account.stg,
+    azurerm_resource_group.rg_name,
+    azurerm_storage_container.cont,
+    azurerm_key_vault.kv,
+  ]
+}
+
+output "backend_access_key" {
+  value     = azurerm_storage_account.stg.primary_access_key
+  sensitive = true
+}

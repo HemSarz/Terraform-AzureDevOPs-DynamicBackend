@@ -84,6 +84,17 @@ resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
 
 }
 
+resource "azurerm_key_vault_access_policy" "tfaz-appspn-access-kv" {
+  key_vault_id = azurerm_key_vault.kv.id
+  object_id    = azuread_application.tfazsp.object_id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  depends_on   = [azurerm_key_vault.kv]
+
+  key_permissions     = ["Get", "List", "Recover", "Delete", "Purge", "Recover"]
+  secret_permissions  = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
+  storage_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
+
+}
 ############ KV Secrets ############
 
 resource "azurerm_key_vault_secret" "tfazspn-kv-sc" {
@@ -103,14 +114,14 @@ resource "azurerm_key_vault_secret" "tfazappid-kv-sc" {
 
 resource "azurerm_key_vault_secret" "tfazstg-kv-sc" {
   name         = "STGPass"
-  value        = azurerm_storage_account.stg.name
+  value        = data.azurerm_storage_account.stg.primary_access_key
   key_vault_id = azurerm_key_vault.kv.id
   depends_on   = [azurerm_key_vault.kv]
 }
 
 resource "azurerm_key_vault_secret" "tfaz-tnt-kv-sc" {
   name         = "TNTid"
-  value        = data.azuread_client_config.current.tenant_id
+  value        = data.azurerm_client_config.current.tenant_id
   key_vault_id = azurerm_key_vault.kv.id
   depends_on   = [azurerm_key_vault.kv]
 }
@@ -124,7 +135,7 @@ resource "azurerm_key_vault_secret" "tfaz-subid-kv-sc" {
 
 resource "azurerm_key_vault_secret" "tfaz-STGName-kv-sc" {
   name         = "STGname"
-  value        = data.azurerm_storage_account.stg.name
+  value        = azurerm_storage_account.stg.name
   key_vault_id = azurerm_key_vault.kv.id
   depends_on   = [azurerm_key_vault.kv]
 }
@@ -199,7 +210,7 @@ resource "azuredevops_build_definition" "DeployPipeline" {
     use_yaml = true
   }
 
-  variable_groups = [azuredevops_variable_group.hawaVB.id]
+  variable_groups = [azuredevops_variable_group.hawaVB.id, azuredevops_variable_group.infraVB]
 
   repository {
     repo_type   = "TfsGit"

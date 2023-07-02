@@ -25,5 +25,9 @@ data "azuredevops_project" "tfazlab" {
 data "azuredevops_git_repository" "tfazrepo" {
   project_id = data.azuredevops_project.tfazlab.project_id
   name       = "tfazlab"
+}
 
+output "STGPassKey" {
+  value     = azurerm_storage_account.stg.primary_access_key
+  sensitive = true
 }

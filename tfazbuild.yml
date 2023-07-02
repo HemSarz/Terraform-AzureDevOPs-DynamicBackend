@@ -28,6 +28,6 @@ steps:
       terraform plan -lock=false
     displayName: Terraform Plan 
     workingDirectory: $(System.DefaultWorkingDirectory)
-  - script: terraform apply -lock=false
+  - script: terraform apply -lock=false -auto-approve
     displayName: Terraform Apply 
     workingDirectory: $(System.DefaultWorkingDirectory)

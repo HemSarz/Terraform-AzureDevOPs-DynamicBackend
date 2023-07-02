@@ -81,7 +81,6 @@ resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
   key_permissions     = ["Get", "List", "Recover", "Delete", "Purge", "Recover"]
   secret_permissions  = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
   storage_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
-
 }
 
 resource "azurerm_key_vault_access_policy" "tfaz-appspn-access-kv" {
@@ -93,8 +92,8 @@ resource "azurerm_key_vault_access_policy" "tfaz-appspn-access-kv" {
   key_permissions     = ["Get", "List", "Recover", "Delete", "Purge", "Recover"]
   secret_permissions  = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
   storage_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
-
 }
+
 ############ KV Secrets ############
 
 resource "azurerm_key_vault_secret" "tfazspn-kv-sc" {

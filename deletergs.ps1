@@ -1,3 +1,8 @@
+Write-Host "Destroying infrastructure..."
+terraform destroy --auto-approve
+
+Start-Sleep -Seconds 2
+
 Write-Host "Deleting Azure resource groups..."
 az group delete --name rg01hh --yes
 

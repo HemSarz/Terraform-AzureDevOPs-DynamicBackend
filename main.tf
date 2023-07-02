@@ -232,7 +232,7 @@ resource "azuredevops_build_definition" "DeployPipeline" {
 
 
 resource "azurerm_storage_container" "MyResource" {
-  name                  = "vhds"
+  name                  = "vhds01"
   storage_account_name  = azurerm_storage_account.stg.name
   container_access_type = "private"
 }

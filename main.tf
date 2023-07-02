@@ -38,6 +38,10 @@ resource "azurerm_key_vault" "kv" {
 
   sku_name = "standard"
 
+  lifecycle {
+    prevent_destroy = true
+  }
+
   enabled_for_deployment          = true
   enabled_for_disk_encryption     = true
   enabled_for_template_deployment = true
@@ -62,6 +66,10 @@ resource "azurerm_key_vault_access_policy" "KVAdoServEP" {
   tenant_id    = data.azurerm_client_config.current.tenant_id
   depends_on   = [azurerm_key_vault.kv]
 
+  lifecycle {
+    prevent_destroy = true
+  }
+
   key_permissions     = ["Get", "List", "Recover", "Delete", "Purge", "Recover"]
   secret_permissions  = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
   storage_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
@@ -73,6 +81,10 @@ resource "azurerm_key_vault_access_policy" "tfaz-appspn-access-kv" {
   tenant_id    = data.azurerm_client_config.current.tenant_id
   depends_on   = [azurerm_key_vault.kv]
 
+  lifecycle {
+    prevent_destroy = true
+  }
+
   key_permissions     = ["Get", "List", "Recover", "Delete", "Purge", "Recover"]
   secret_permissions  = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
   storage_permissions = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
@@ -83,6 +95,10 @@ resource "azurerm_key_vault_access_policy" "tfaz-spn-access-kv" {
   object_id    = azuread_service_principal.tfazspn.object_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   depends_on   = [azurerm_key_vault.kv]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 
   key_permissions     = ["Get", "List", "Recover", "Delete", "Purge", "Recover"]
   secret_permissions  = ["Get", "List", "Set", "Delete", "Purge", "Recover"]
